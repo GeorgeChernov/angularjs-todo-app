@@ -29,17 +29,22 @@ describe('task component', function () {
             $compile = _$compile_;
         }));
 
+        function createComponent(componentMarkup, componentScope) {
+            let element = angular.element(componentMarkup);
+            element = $compile(element)(componentScope);
+            componentScope.$digest();
+
+            return element;
+        }
+
         it('should display correct name', () => {
-
             // prepare scope
-            scope['name'] = 'Test task';
+            scope["name"] = "Test task";
 
-            // render the element
-            let element = angular.element(`<task name="{{name}}"></task>`);
-            element = $compile(element)(scope);
-            scope.$digest();
+            // create the element
+            var element = createComponent(`<task name="{{name}}"></task>`, scope);
 
-            // test the element
+            // test
             expect(element.text().trim()).toEqual('Test task');
         });
     });
