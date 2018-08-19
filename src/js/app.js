@@ -1,8 +1,8 @@
-function ToDoAppController(){
-    
+function ToDoAppController() {
+
 }
 
 
 angular
-.module('app', [])
-.controller('ToDoAppController', ToDoAppController);
+    .module('app', [])
+    .controller('ToDoAppController', ToDoAppController);

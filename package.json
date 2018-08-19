@@ -9,8 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "angular": "^1.7.2",
-    "angular-mocks": "^1.7.3"
+    "angular": "1.7.2",
+    "angular-mocks": "1.7.2"
   },
   "devDependencies": {
     "jasmine-core": "3.2.1",
