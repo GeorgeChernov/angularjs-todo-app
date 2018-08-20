@@ -17,7 +17,38 @@ describe('task component', function () {
             var ctrl = $componentController('task', null, bindings);
 
             expect(ctrl.name).toBe('task name');
-        })
+        });
+
+        it('should has isDone property with value from bindings', function () {
+            var bindings = {
+                isDone: true
+            };
+
+            var ctrl = $componentController('task', null, bindings);
+
+            expect(ctrl.isDone).toBeTruthy();
+        });
+
+        it('should call the `onUpdate` binding, when updating the task', function () {
+            var onUpdateSpy = jasmine.createSpy('onUpdate');
+
+            var bindings = {
+                name: "task name",
+                isDone: true,
+                onUpdate: onUpdateSpy
+            };
+
+            var ctrl = $componentController('task', null, bindings);
+
+            ctrl.onIsDoneChanged();
+
+            expect(onUpdateSpy).toHaveBeenCalledWith({
+                $event: {
+                    name: "task name",
+                    isDone: true
+                }
+            });
+        });
     });
 
     describe('dom', function () {
@@ -34,6 +65,47 @@ describe('task component', function () {
             var element = testHelper.createComponent(`<task name="{{name}}"></task>`, bindings);
 
             expect(element.text().trim()).toEqual('Test task');
+        });
+
+        it('should display unchecked checkbox by default', () => {
+            var bindings = {
+                name: 'Test task'
+            };
+
+            var element = testHelper.createComponent(
+                `<task name="{{name}}"></task>`,
+                bindings);
+
+            expect(element[0].querySelectorAll('input').length).toBe(1);
+            expect(element[0].querySelectorAll('input')[0].checked).toBeFalsy();
+        });
+
+        it('should display unchecked checkbox when isDone = false', () => {
+            var bindings = {
+                name: 'Test task',
+                isDone: false
+            };
+
+            var element = testHelper.createComponent(
+                `<task name="{{name}}" is-done="isDone"></task>`,
+                bindings);
+
+            expect(element[0].querySelectorAll('input').length).toBe(1);
+            expect(element[0].querySelectorAll('input')[0].checked).toBeFalsy();
+        });
+
+        it('should display checked checkbox when isDone = true', () => {
+            var bindings = {
+                name: 'Test task',
+                isDone: true
+            };
+
+            var element = testHelper.createComponent(
+                `<task name="{{name}}" is-done="isDone"></task>`,
+                bindings);
+
+            expect(element[0].querySelectorAll('input').length).toBe(1);
+            expect(element[0].querySelectorAll('input')[0].checked).toBeTruthy();
         });
     });
 });
