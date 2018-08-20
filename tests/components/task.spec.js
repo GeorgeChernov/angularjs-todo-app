@@ -21,30 +21,18 @@ describe('task component', function () {
     });
 
     describe('dom', function () {
-        let $compile;
-        let scope;
+        let testHelper;
 
-        beforeEach(inject(($rootScope, _$compile_) => {
-            scope = $rootScope.$new();
-            $compile = _$compile_;
+        beforeEach(module('testHelper.module'));
+
+        beforeEach(inject((_testHelper_) => {
+            testHelper = _testHelper_;
         }));
 
-        function createComponent(componentMarkup, componentScope) {
-            let element = angular.element(componentMarkup);
-            element = $compile(element)(componentScope);
-            componentScope.$digest();
-
-            return element;
-        }
-
         it('should display correct name', () => {
-            // prepare scope
-            scope["name"] = "Test task";
+            var bindings = { name: 'Test task' };
+            var element = testHelper.createComponent(`<task name="{{name}}"></task>`, bindings);
 
-            // create the element
-            var element = createComponent(`<task name="{{name}}"></task>`, scope);
-
-            // test
             expect(element.text().trim()).toEqual('Test task');
         });
     });
