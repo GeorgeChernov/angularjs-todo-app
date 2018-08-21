@@ -29,23 +29,22 @@ describe('task component', function () {
             expect(ctrl.isDone).toBeTruthy();
         });
 
-        it('should call the `onUpdate` binding, when updating the task', function () {
-            var onUpdateSpy = jasmine.createSpy('onUpdate');
+        it('should call the `onToggle` binding, when clicking on the task', function () {
+            var onToggleSpy = jasmine.createSpy('onToggle');
 
             var bindings = {
                 name: "task name",
                 isDone: true,
-                onUpdate: onUpdateSpy
+                onToggle: onToggleSpy
             };
 
             var ctrl = $componentController('task', null, bindings);
 
-            ctrl.onIsDoneChanged();
+            ctrl.onClick();
 
-            expect(onUpdateSpy).toHaveBeenCalledWith({
+            expect(onToggleSpy).toHaveBeenCalledWith({
                 $event: {
-                    name: "task name",
-                    isDone: true
+                    name: "task name"
                 }
             });
         });
@@ -67,7 +66,7 @@ describe('task component', function () {
             expect(element.text().trim()).toEqual('Test task');
         });
 
-        it('should display unchecked checkbox by default', () => {
+        it('should not be marked as done by default', () => {
             var bindings = {
                 name: 'Test task'
             };
@@ -76,11 +75,10 @@ describe('task component', function () {
                 `<task name="{{name}}"></task>`,
                 bindings);
 
-            expect(element[0].querySelectorAll('input').length).toBe(1);
-            expect(element[0].querySelectorAll('input')[0].checked).toBeFalsy();
+            expect(element[0].querySelectorAll('span.task-done').length).toBe(0);
         });
 
-        it('should display unchecked checkbox when isDone = false', () => {
+        it('should not be marked as done when isDone = false', () => {
             var bindings = {
                 name: 'Test task',
                 isDone: false
@@ -90,11 +88,10 @@ describe('task component', function () {
                 `<task name="{{name}}" is-done="isDone"></task>`,
                 bindings);
 
-            expect(element[0].querySelectorAll('input').length).toBe(1);
-            expect(element[0].querySelectorAll('input')[0].checked).toBeFalsy();
+            expect(element[0].querySelectorAll('span.task-done').length).toBe(0);
         });
 
-        it('should display checked checkbox when isDone = true', () => {
+        it('should be marked as done when isDone = true', () => {
             var bindings = {
                 name: 'Test task',
                 isDone: true
@@ -104,8 +101,7 @@ describe('task component', function () {
                 `<task name="{{name}}" is-done="isDone"></task>`,
                 bindings);
 
-            expect(element[0].querySelectorAll('input').length).toBe(1);
-            expect(element[0].querySelectorAll('input')[0].checked).toBeTruthy();
+            expect(element[0].querySelectorAll('span.task-done').length).toBe(1);
         });
     });
 });

@@ -2,24 +2,22 @@ var taskComponent = {
     bindings: {
         name: "@",
         isDone: "<",
-        onUpdate: "&"
+        onToggle: "&"
 
     },
     controller: function () {
-        this.onIsDoneChanged = function () {
-            this.onUpdate({
+        this.onClick = function(){
+            this.onToggle({
                 $event: {
-                    name: this.name,
-                    isDone: this.isDone
+                    name: this.name
                 }
             });
-        }
+        };
     },
     template:
     `
-        <div class='task'>
-            <input type='checkbox' ng-model="$ctrl.isDone" ng-change="$ctrl.onIsDoneChanged()" />
-            <span>{{$ctrl.name}}</span>
+        <div class='task' ng-click="$ctrl.onClick()">
+            <span ng-class="{'task-done': $ctrl.isDone}">{{$ctrl.name}}</span>
         </div>
     `
 };

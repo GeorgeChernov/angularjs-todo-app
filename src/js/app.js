@@ -1,5 +1,9 @@
 function ToDoAppController() {
-
+    this.name = "Test";
+    this.isDone = false;
+    this.onToggle = function($event){
+        this.isDone = !this.isDone;
+    }
 }
 
 
