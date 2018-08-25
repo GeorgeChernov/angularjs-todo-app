@@ -1,9 +1,16 @@
 function ToDoAppController() {
-    this.name = "Test";
-    this.isDone = false;
-    this.onToggle = function($event){
-        this.isDone = !this.isDone;
-    }
+    this.listOfTasks = [
+        {
+            name: 'To Do Something',
+            isDone: true,
+            onToggle: function(){}
+        },
+        {
+            name: 'To Do Something Another',
+            isDone: false,
+            onToggle: function(){}
+        }
+    ]
 }
 
 
