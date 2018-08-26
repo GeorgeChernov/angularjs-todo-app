@@ -16,9 +16,9 @@ var addTask = {
     template: 
     `
         <div class='task add-task'>
-            <form ng-submit='$ctrl.onSubmit()'>
-                <input type='text' ng-model='$ctrl.taskName' />
-                <button type='submit'>Add Task</button>
+            <form name='addTaskForm' ng-submit='$ctrl.onSubmit()'>
+                <input name='taskNameField' required='' type='text' ng-model='$ctrl.taskName' />
+                <button ng-disabled='addTaskForm.$invalid' type='submit'>Add Task</button>
             </form>
         </div>
     `
