@@ -5,27 +5,29 @@ var taskList = {
     },
     controller: function () {
         this.$onInit = function () {
-            bindOnToggleHandler.call(this);
+            bindOnUpdateHandler.call(this);
         };
 
         this.$onChanges = function(changes){
             if(changes.listOfTasks){
                 this.listOfTasks = angular.copy(this.listOfTasks);
-                bindOnToggleHandler.call(this);
+                bindOnUpdateHandler.call(this);
             }
         };
 
-        function bindOnToggleHandler(){
-            var bindedOnToggleHandler = onToggleHandler.bind(this);
+        function bindOnUpdateHandler(){
+            var bindedOnUpdateHandler = onUpdateHandler.bind(this);
             this.listOfTasks.forEach(function (task) {
-                task.onToggle = bindedOnToggleHandler;
+                task.onUpdate = bindedOnUpdateHandler;
             });
         }
 
-        function onToggleHandler($event) {
+        function onUpdateHandler($event) {
             var task = findTaskByName.call(this, $event.name);
-            if (task) {
-                task.isDone = !task.isDone;
+            if (task) {       
+                task.isDone = $event.isDone;
+                task.isPostponed = $event.isPostponed;
+
                 this.onUpdate({
                     $event:{
                         listOfTasks: this.listOfTasks
@@ -51,7 +53,8 @@ var taskList = {
     <task ng-repeat='task in $ctrl.listOfTasks' 
         name="{{task.name}}" 
         is-done="task.isDone" 
-        on-toggle="task.onToggle($event)">
+        is-postponed="task.isPostponed" 
+        on-update="task.onUpdate($event)">
     </task>`
 }
 

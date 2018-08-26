@@ -1,12 +1,14 @@
 function ToDoAppController() {
     this.listOfTasks = [
         {
-            name: 'To Do Something',
-            isDone: true
+            name: 'Read the article',
+            isDone: true,
+            isPostponed: false
         },
         {
-            name: 'To Do Something Another',
-            isDone: false
+            name: 'Check the PR',
+            isDone: false,
+            isPostponed: true
         }
     ];
 
@@ -18,7 +20,8 @@ function ToDoAppController() {
         var newList = angular.copy(this.listOfTasks);
         newList.push({
             name: $event.taskName,
-            isDone: false
+            isDone: false,
+            isPostponed: false
         });
 
         this.listOfTasks = newList;

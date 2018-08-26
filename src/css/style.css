@@ -8,6 +8,10 @@
     margin: 4px;
 }
 
+.task button{
+    float: right;
+}
+
 .add-task button{
     float: right;
     height: 26px;
