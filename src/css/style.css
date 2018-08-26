@@ -8,6 +8,16 @@
     margin: 4px;
 }
 
+.add-task button{
+    float: right;
+    height: 26px;
+}
+
+.add-task input{
+    height: 20px;
+    width: 220px;
+}
+
 .task-done{
     text-decoration: line-through;
 }

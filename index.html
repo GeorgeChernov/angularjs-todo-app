@@ -10,10 +10,12 @@
   <script src="src/js/app.js"></script>
   <script src="src/js/components/taskList.component.js"></script>
   <script src="src/js/components/task.component.js"></script>
+  <script src="src/js/components/addTask.component.js"></script>
 </head>
 
 <body>
   <div ng-controller="ToDoAppController as toDoAppController">
+    <add-task on-add="toDoAppController.onAddNewTask($event)"></add-task>
     <task-list list-of-tasks="toDoAppController.listOfTasks" 
                on-update="toDoAppController.onUpdateHandler($event)">
     </task-list>
