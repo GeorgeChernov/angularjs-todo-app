@@ -1,29 +1,42 @@
 var taskList = {
     bindings: {
-        listOfTasks: "<"
+        listOfTasks: "<",
+        onUpdate: "&"
     },
     controller: function () {
-
-        var list = [];
-
         this.$onInit = function () {
-            list = this.listOfTasks;
-            list.forEach(function (task) {
-                task.onToggle = onToggleHandler;
-            });
+            bindOnToggleHandler.call(this);
         };
 
+        this.$onChanges = function(changes){
+            if(changes.listOfTasks){
+                this.listOfTasks = angular.copy(this.listOfTasks);
+                bindOnToggleHandler.call(this);
+            }
+        };
+
+        function bindOnToggleHandler(){
+            var bindedOnToggleHandler = onToggleHandler.bind(this);
+            this.listOfTasks.forEach(function (task) {
+                task.onToggle = bindedOnToggleHandler;
+            });
+        }
+
         function onToggleHandler($event) {
-            var task = findTaskByName($event.name);
+            var task = findTaskByName.call(this, $event.name);
             if (task) {
                 task.isDone = !task.isDone;
+                this.onUpdate({
+                    $event:{
+                        listOfTasks: this.listOfTasks
+                    }
+                });
             }
         }
 
         function findTaskByName(taskName) {
             var resultTask = null;
-
-            list.forEach(function (task) {
+            this.listOfTasks.forEach(function (task) {
                 if (task.name === taskName) {
                     resultTask =  task;
                 }
@@ -31,6 +44,7 @@ var taskList = {
 
             return resultTask;
         }
+
     },
     template:
     `

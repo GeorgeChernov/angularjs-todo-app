@@ -14,7 +14,8 @@
 
 <body>
   <div ng-controller="ToDoAppController as toDoAppController">
-    <task-list list-of-tasks="toDoAppController.listOfTasks">
+    <task-list list-of-tasks="toDoAppController.listOfTasks" 
+               on-update="toDoAppController.onUpdateHandler($event)">
     </task-list>
   </div>
 </body>
