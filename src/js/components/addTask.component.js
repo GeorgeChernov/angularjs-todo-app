@@ -4,7 +4,7 @@ var addTask = {
     },
     controller: function(){
         this.taskName = "";
-        this.onClick = function(){
+        this.onSubmit = function(){
             this.onAdd({
                 $event: {
                     taskName: this.taskName
@@ -16,8 +16,10 @@ var addTask = {
     template: 
     `
         <div class='task add-task'>
-            <input type='text' ng-model='$ctrl.taskName' />
-            <button ng-click='$ctrl.onClick()'>Add Task</button>
+            <form ng-submit='$ctrl.onSubmit()'>
+                <input type='text' ng-model='$ctrl.taskName' />
+                <button type='submit'>Add Task</button>
+            </form>
         </div>
     `
 };
